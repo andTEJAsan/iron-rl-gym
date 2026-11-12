@@ -1,0 +1,45 @@
+{
+  "num_episodes": 45,
+  "total_transitions": 4597,
+  "obs_dim": 36,
+  "action_dim": 4,
+  "mean_episode_reward": 90.0375443988782,
+  "success_rate": 1.0,
+  "episodes": [
+    {
+      "episode_id": 0,
+      "steps": 98,
+      "total_reward": 89.20650734249674,
+      "truck_load": 1.54,
+      "success": true
+    },
+    {
+      "episode_id": 1,
+      "steps": 101,
+      "total_reward": 90.69685005555553,
+      "truck_load": 1.54,
+      "success": true
+    },
+    {
+      "episode_id": 2,
+      "steps": 111,
+      "total_reward": 95.15831459265824,
+      "truck_load": 1.54,
+      "success": true
+    },
+    {
+      "episode_id": 3,
+      "steps": 106,
+      "total_reward": 92.41493997312095,
+      "truck_load": 1.54,
+      "success": true
+    },
+    {
+      "episode_id": 4,
+      "steps": 97,
+      "total_reward": 90.38836246889139,
+      "truck_load": 1.54,
+      "success": true
+    }
+  ]
+}

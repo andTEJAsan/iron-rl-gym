@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.DS_Store
+
+# Raw external datasets (>50MB - 980MB); reproducible via download_real_datasets.py & fetch_real_h5.py
+real_data/fuxi/*.hdf5
+real_data/fuxi/*.h5
+real_data/fuxi/*.mp4
+real_data/flywheel/*.mp4
