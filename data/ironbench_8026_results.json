@@ -1,0 +1,302 @@
+{
+  "leaderboard": [
+    {
+      "policy_name": "Random",
+      "iron_score": 1.38,
+      "success_rate_pct": 0.0,
+      "throughput_rocks_per_min": 0.0,
+      "bucket_fill_pct": 0.0,
+      "spillage_pct": 100.0,
+      "cycle_time_sec": 10.5,
+      "servo_tv": 0.1725,
+      "episode_return": 20.7,
+      "mean_rocks_in_truck": 0.0,
+      "scenarios": {
+        "T1_Nominal": {
+          "success_rate_pct": 0.0,
+          "throughput_rocks_per_min": 0.0,
+          "bucket_fill_pct": 0.0,
+          "spillage_pct": 100.0,
+          "servo_tv": 0.17213937581893596,
+          "episode_return": 38.427343884436425,
+          "mean_rocks_in_truck": 0.0
+        },
+        "T2_DeepTrench": {
+          "success_rate_pct": 0.0,
+          "throughput_rocks_per_min": 0.0,
+          "bucket_fill_pct": 0.0,
+          "spillage_pct": 100.0,
+          "servo_tv": 0.17444553506340235,
+          "episode_return": 3.5092546828091336,
+          "mean_rocks_in_truck": 0.0
+        },
+        "T3_RandomTruckPose": {
+          "success_rate_pct": 0.0,
+          "throughput_rocks_per_min": 0.0,
+          "bucket_fill_pct": 0.0,
+          "spillage_pct": 100.0,
+          "servo_tv": 0.17025097947965823,
+          "episode_return": 8.823214415367683,
+          "mean_rocks_in_truck": 0.0
+        },
+        "T4_HeavyWetSoil": {
+          "success_rate_pct": 0.0,
+          "throughput_rocks_per_min": 0.0,
+          "bucket_fill_pct": 0.0,
+          "spillage_pct": 100.0,
+          "servo_tv": 0.1741368865580049,
+          "episode_return": 15.300725910998917,
+          "mean_rocks_in_truck": 0.0
+        },
+        "T5_Sim2Real_Stress": {
+          "success_rate_pct": 0.0,
+          "throughput_rocks_per_min": 0.0,
+          "bucket_fill_pct": 0.0,
+          "spillage_pct": 100.0,
+          "servo_tv": 0.17142961718113597,
+          "episode_return": 37.65289019742049,
+          "mean_rocks_in_truck": 0.0
+        }
+      }
+    },
+    {
+      "policy_name": "Stage 1: BC (Imitation)",
+      "iron_score": 74.07,
+      "success_rate_pct": 87.1,
+      "throughput_rocks_per_min": 41.7,
+      "bucket_fill_pct": 60.0,
+      "spillage_pct": 34.7,
+      "cycle_time_sec": 10.5,
+      "servo_tv": 0.0317,
+      "episode_return": 1108.4,
+      "mean_rocks_in_truck": 7.3,
+      "scenarios": {
+        "T1_Nominal": {
+          "success_rate_pct": 92.85714285714286,
+          "throughput_rocks_per_min": 37.14285714285714,
+          "bucket_fill_pct": 52.77777777777778,
+          "spillage_pct": 42.279411764705884,
+          "servo_tv": 0.026278649296616878,
+          "episode_return": 1043.9245959465127,
+          "mean_rocks_in_truck": 6.5
+        },
+        "T2_DeepTrench": {
+          "success_rate_pct": 100.0,
+          "throughput_rocks_per_min": 45.714285714285715,
+          "bucket_fill_pct": 52.77777777777778,
+          "spillage_pct": 34.13461538461539,
+          "servo_tv": 0.025830134319742244,
+          "episode_return": 1149.391407068731,
+          "mean_rocks_in_truck": 8.0
+        },
+        "T3_RandomTruckPose": {
+          "success_rate_pct": 100.0,
+          "throughput_rocks_per_min": 54.28571428571429,
+          "bucket_fill_pct": 69.44444444444443,
+          "spillage_pct": 35.921052631578945,
+          "servo_tv": 0.03083214193617193,
+          "episode_return": 1408.5416490176895,
+          "mean_rocks_in_truck": 9.5
+        },
+        "T4_HeavyWetSoil": {
+          "success_rate_pct": 85.71428571428571,
+          "throughput_rocks_per_min": 34.285714285714285,
+          "bucket_fill_pct": 50.0,
+          "spillage_pct": 25.0,
+          "servo_tv": 0.028172533942709983,
+          "episode_return": 1031.8367409434343,
+          "mean_rocks_in_truck": 6.0
+        },
+        "T5_Sim2Real_Stress": {
+          "success_rate_pct": 57.142857142857146,
+          "throughput_rocks_per_min": 37.14285714285714,
+          "bucket_fill_pct": 75.0,
+          "spillage_pct": 36.111111111111114,
+          "servo_tv": 0.047143817047467666,
+          "episode_return": 908.1093967003746,
+          "mean_rocks_in_truck": 6.5
+        }
+      }
+    },
+    {
+      "policy_name": "Stage 2: RL Fine-Tuned",
+      "iron_score": 88.4,
+      "success_rate_pct": 100.0,
+      "throughput_rocks_per_min": 62.3,
+      "bucket_fill_pct": 82.2,
+      "spillage_pct": 31.8,
+      "cycle_time_sec": 10.5,
+      "servo_tv": 0.0121,
+      "episode_return": 2015.3,
+      "mean_rocks_in_truck": 10.9,
+      "scenarios": {
+        "T1_Nominal": {
+          "success_rate_pct": 100.0,
+          "throughput_rocks_per_min": 65.71428571428572,
+          "bucket_fill_pct": 86.11111111111111,
+          "spillage_pct": 32.608695652173914,
+          "servo_tv": 0.010105285910735767,
+          "episode_return": 2120.413838448432,
+          "mean_rocks_in_truck": 11.5
+        },
+        "T2_DeepTrench": {
+          "success_rate_pct": 100.0,
+          "throughput_rocks_per_min": 57.14285714285714,
+          "bucket_fill_pct": 86.11111111111111,
+          "spillage_pct": 35.565217391304344,
+          "servo_tv": 0.01021186231576859,
+          "episode_return": 1817.4166466399265,
+          "mean_rocks_in_truck": 10.0
+        },
+        "T3_RandomTruckPose": {
+          "success_rate_pct": 100.0,
+          "throughput_rocks_per_min": 71.42857142857143,
+          "bucket_fill_pct": 86.11111111111111,
+          "spillage_pct": 31.5,
+          "servo_tv": 0.01045865366921426,
+          "episode_return": 2293.559751565347,
+          "mean_rocks_in_truck": 12.5
+        },
+        "T4_HeavyWetSoil": {
+          "success_rate_pct": 100.0,
+          "throughput_rocks_per_min": 60.0,
+          "bucket_fill_pct": 75.0,
+          "spillage_pct": 25.0,
+          "servo_tv": 0.010577355139579567,
+          "episode_return": 1996.7432218660783,
+          "mean_rocks_in_truck": 10.5
+        },
+        "T5_Sim2Real_Stress": {
+          "success_rate_pct": 100.0,
+          "throughput_rocks_per_min": 57.142857142857146,
+          "bucket_fill_pct": 77.77777777777779,
+          "spillage_pct": 34.565217391304344,
+          "servo_tv": 0.019124639121449433,
+          "episode_return": 1848.61515189191,
+          "mean_rocks_in_truck": 10.0
+        }
+      }
+    },
+    {
+      "policy_name": "Scripted Oracle",
+      "iron_score": 80.69,
+      "success_rate_pct": 85.7,
+      "throughput_rocks_per_min": 40.6,
+      "bucket_fill_pct": 78.3,
+      "spillage_pct": 36.2,
+      "cycle_time_sec": 10.5,
+      "servo_tv": 0.0116,
+      "episode_return": 1944.0,
+      "mean_rocks_in_truck": 7.1,
+      "scenarios": {
+        "T1_Nominal": {
+          "success_rate_pct": 100.0,
+          "throughput_rocks_per_min": 60.0,
+          "bucket_fill_pct": 83.33333333333334,
+          "spillage_pct": 31.884057971014492,
+          "servo_tv": 0.011403693604275926,
+          "episode_return": 2215.4109740755525,
+          "mean_rocks_in_truck": 10.5
+        },
+        "T2_DeepTrench": {
+          "success_rate_pct": 78.57142857142857,
+          "throughput_rocks_per_min": 31.42857142857143,
+          "bucket_fill_pct": 75.0,
+          "spillage_pct": 38.81987577639751,
+          "servo_tv": 0.011724658680765158,
+          "episode_return": 1918.879170707924,
+          "mean_rocks_in_truck": 5.5
+        },
+        "T3_RandomTruckPose": {
+          "success_rate_pct": 78.57142857142857,
+          "throughput_rocks_per_min": 37.142857142857146,
+          "bucket_fill_pct": 83.33333333333333,
+          "spillage_pct": 41.14420062695925,
+          "servo_tv": 0.011074503801184535,
+          "episode_return": 2005.4133961591192,
+          "mean_rocks_in_truck": 6.5
+        },
+        "T4_HeavyWetSoil": {
+          "success_rate_pct": 92.85714285714286,
+          "throughput_rocks_per_min": 37.14285714285714,
+          "bucket_fill_pct": 66.66666666666667,
+          "spillage_pct": 37.25490196078431,
+          "servo_tv": 0.01122383406318685,
+          "episode_return": 1541.5622843486854,
+          "mean_rocks_in_truck": 6.5
+        },
+        "T5_Sim2Real_Stress": {
+          "success_rate_pct": 78.57142857142857,
+          "throughput_rocks_per_min": 37.142857142857146,
+          "bucket_fill_pct": 83.33333333333334,
+          "spillage_pct": 31.884057971014492,
+          "servo_tv": 0.01236697526551776,
+          "episode_return": 2038.807988352617,
+          "mean_rocks_in_truck": 6.5
+        }
+      }
+    }
+  ],
+  "bc_losses": [
+    0.13319,
+    0.11914,
+    0.11375,
+    0.10917,
+    0.10686,
+    0.10483,
+    0.10299,
+    0.1005,
+    0.09972,
+    0.09901,
+    0.09894,
+    0.09758,
+    0.09649,
+    0.09523,
+    0.09406,
+    0.09445,
+    0.09315,
+    0.09182,
+    0.09122,
+    0.09014,
+    0.09047,
+    0.08749,
+    0.08716,
+    0.08686,
+    0.0853,
+    0.08332,
+    0.08354,
+    0.08268
+  ],
+  "rl_returns": [
+    2060.34,
+    2242.21,
+    1899.9,
+    1726.52,
+    1322.12,
+    1700.33,
+    2334.21,
+    1893.2,
+    572.67,
+    1624.06,
+    2571.77,
+    2530.85,
+    2366.3,
+    741.12,
+    1521.98,
+    2206.55,
+    2271.83,
+    2318.64,
+    1574.77,
+    2280.32,
+    2569.94,
+    1841.55,
+    1690.56,
+    660.81
+  ],
+  "elrs_50hz_verification": {
+    "total_50hz_ticks": 200,
+    "mean_shadow_l1_divergence": 0.0453,
+    "failsafe_neutral_1500us_verified": true,
+    "sample_crsf_frame_hex": "c8181618fba25679063ef0810f7ce0031ff8c0073ef0810f7cb2"
+  }
+}
