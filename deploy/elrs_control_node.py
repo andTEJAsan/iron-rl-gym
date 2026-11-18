@@ -2,21 +2,20 @@
 50 Hz JCB 8026 Deployment & Shadow-Mode Control Node (`deploy/elrs_control_node.py`)
 ====================================================================================
 Implements the exact runtime program described in Section 2, 3.3, and 5 of the
-"Two-week demo: hardware list" specification:
+"Two-week demo: hardware list" specification, now upgraded with the Asynchronous
+VLM/VLA Semantic Intervention Gate (`deploy/vlm_supervisor.py`):
 
   1. Runs at 50 Hz (20 ms period).
   2. Supports 3 control modes producing the exact same 4 ISO joystick values:
        - `MANUAL_XBOX`:   PowerA Wired Xbox Controller (B3) sticks -> [Ch1, Ch2, Ch3, Ch4]
        - `SHADOW_MODEL`:  Human drives via Xbox controller while `JCB8026ActorCritic` runs
                           live in parallel, logging stick divergence `||a_model - a_human||`
-       - `AUTONOMOUS`:    `JCB8026ActorCritic` (or scripted routine) drives the 4 sticks
-  3. Safety & Deadman Gate (Section 2 & 5):
+       - `AUTONOMOUS`:    `JCB8026ActorCritic` drives the 4 sticks, supervised by `CabVLMSupervisor`
+  3. Safety, Deadman & VLM Intervention Gate:
        - Releases sticks to neutral [0, 0, 0, 0] (1500 us CRSF failsafe) immediately if:
            * Xbox Controller deadman trigger is released, OR
-           * Any sensor stream (WitMotion UDP, Livox Mid360S, Reolink RTSP, Drone AprilTag)
-             exceeds the 200 ms staleness timeout.
-  4. Encodes 26-byte CRSF packets over USB-Serial (Adafruit FTDI Friend B5 -> Radiomaster
-     Ranger Micro B4) and logs every step as training data.
+           * Any cab sensor stream (WitMotion UDP, Livox Mid360S, Reolink RTSP) > 200 ms stale, OR
+           * `CabVLMSupervisor` issues a `HOLD_1500US_SAFETY_WAIT` intervention (hazard or truck wait).
 """
 
 from enum import Enum
@@ -26,6 +25,7 @@ import numpy as np
 
 from deploy.jcb8026_config import CONFIG, sticks_to_crsf_frame, sticks_to_pwm_us
 from deploy.sensors_io import JCB8026SensorPacket
+from deploy.vlm_supervisor import InterventionType, VLMInterventionDecision
 from models.policy import JCB8026ActorCritic
 
 
@@ -38,7 +38,7 @@ class ControlMode(str, Enum):
 class ELRSControlNode50Hz:
     """
     Production 50 Hz control loop for the JCB 8026 ground laptop.
-    Can talk to a physical `/dev/ttyUSB*` FTDI Friend serial port or run in dry-run/sim mode.
+    Integrates the local 50 Hz policy ("System 1") with the VLM Supervisor ("System 2").
     """
 
     def __init__(
@@ -60,20 +60,15 @@ class ELRSControlNode50Hz:
         sensor_packet: JCB8026SensorPacket,
         xbox_sticks: np.ndarray,
         deadman_held: bool,
+        vlm_decision: Optional[VLMInterventionDecision] = None,
         now: Optional[float] = None,
     ) -> Dict:
-        """
-        Executes a single 20 ms (50 Hz) control tick.
-        Returns the command dictionary containing normalized sticks, PWM us, CRSF frame bytes,
-        safety flags, and shadow-mode divergence metrics.
-        """
         if now is None:
             now = time.monotonic()
 
         sensors_fresh = sensor_packet.is_fresh(now=now)
         obs_dict = sensor_packet.to_obs_dict()
 
-        # Evaluate model prediction in both SHADOW_MODEL and AUTONOMOUS modes
         if self.policy is not None:
             model_sticks = self.policy.predict_sticks(obs_dict, device=self.device)
         else:
@@ -81,7 +76,6 @@ class ELRSControlNode50Hz:
 
         human_sticks = np.clip(np.asarray(xbox_sticks, dtype=np.float32), -1.0, 1.0)
 
-        # Select active source before safety gate
         if self.mode in (ControlMode.MANUAL_XBOX, ControlMode.SHADOW_MODEL):
             desired_sticks = human_sticks
         else:
@@ -95,9 +89,17 @@ class ELRSControlNode50Hz:
             self.last_sent_sticks + max_delta,
         )
 
-        # SAFETY GATE (Section 2 & 5): Deadman trigger + Sensor staleness watchdog
-        # In manual mode, deadman trigger alone gates sticks; in autonomous mode, both deadman + fresh sensors are required
-        safe_to_drive = bool(deadman_held and (sensors_fresh or self.mode == ControlMode.MANUAL_XBOX))
+        # VLM Supervisor HOLD check
+        vlm_hold = bool(vlm_decision.hold_neutral) if vlm_decision is not None else False
+        vlm_status = vlm_decision.intervention.value if vlm_decision is not None else InterventionType.NOMINAL.value
+        vlm_reason = vlm_decision.reasoning_text if vlm_decision is not None else "VLM [NOMINAL]"
+
+        # SAFETY GATE (Section 2 & 5 + VLM Hold): Deadman trigger + Sensor staleness watchdog + VLM safety hold
+        safe_to_drive = bool(
+            deadman_held
+            and not vlm_hold
+            and (sensors_fresh or self.mode == ControlMode.MANUAL_XBOX)
+        )
 
         if safe_to_drive:
             active_sticks = rate_limited_sticks.astype(np.float32)
@@ -116,6 +118,9 @@ class ELRSControlNode50Hz:
             "mode": self.mode.value,
             "deadman_held": bool(deadman_held),
             "sensors_fresh": bool(sensors_fresh),
+            "vlm_hold": vlm_hold,
+            "vlm_intervention": vlm_status,
+            "vlm_reasoning": vlm_reason,
             "safe_to_drive": safe_to_drive,
             "human_sticks": human_sticks.copy(),
             "model_sticks": model_sticks.copy(),
